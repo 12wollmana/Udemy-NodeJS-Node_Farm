@@ -1,7 +1,12 @@
+// First Party Modules
 const fs = require("fs");
 const http = require("http");
 const url = require("url");
 
+// Third Party Modules
+const slugify = require("slugify");
+
+// Custom Modules
 const replaceTemplate = require(`./modules/replaceTemplate`);
 
 //---------------------------------------------
@@ -39,11 +44,14 @@ const replaceTemplate = require(`./modules/replaceTemplate`);
 
 //#endregion
 
-//#############################################
+//---------------------------------------------
 //#region SERVER
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(data);
+
+const slugs = dataObj.map((el) => slugify(el.productName, { lower: true }));
+console.log(slugs);
 
 const tempOverview = fs.readFileSync(
     `${__dirname}/templates/template-overview.html`,
